@@ -1,0 +1,55 @@
+
+FLUXO FRONT END:
+Pagina 1 <a> Agendar Atendimento <a/>
+Pagina 2 <checkbox> Seleciona um serviço
+Seleciona Barbeiro
+Pagina 3 <checkbox> Seleciona um dia
+Pagina 4 <checkbox> Seleciona um horário
+Pagina 5 <a> Efetuar login para continuar <a> È o unico botão desta página. E vai para a proxima a seguir:
+Pagina 6 <input> Login <> Nesta pagina tem 02 botoes "Login" e "Cadastre-se", já oferece os campos para input {emial e senha} pra login ou caso nao tenha cadastro também exibe o botao "Cadastrar".
+Se ja tem cadastro e clicou em login já vai direto pra pagina 7 , se clicou em "/cadastrar" vai pra uma pagina de cadastro e ao clicar em /cadastrar , também já retorna direto pra página 7:
+Pagina 7 <button> "Confirmar Agendamento" : Essa pagina já armazenou as opções selecionadas anteriormente e ainda podem ser editadas e tem o endpoint /agendar.
+
+
+FLUXO BACK-END
+1) /login : Post { email, senha }
+Após clicar no login a pagina seguinte já retorna: agendamento {Data, horário, serviço, valor } - mas ainda não foi chamado o /agendar. Então suponho que esses dados não foram pro banco ainda, devem estar no front-end ainda?
+Na mesma pagina do /login tem a opção /cadastrar:
+2) /cadastrar: Post {Nome, email, telefone, dataDeNascimento, senha}
+login > visualiza Corte+Preço+Horário
+"Confirmar Agendamento":
+
+/agendar: Post { serviço, data , horário, userID }
+
+------------entidades---------------
+
+User { id, name, phone, email, senha, autorizacao}
+
+
+
+
+
+------------User:cliente-------------
+/cadastrar: Post {Nome, email, telefone, dataDeNascimento, senha}
+/login: Post { email, senha }
+/sair(logout)
+/listarMeusAgendamentos
+/cancelarMeuAgendamento
+/agendar: Post { serviço, data , horário, userID }
+
+____________User:adm________________
+
+/listarTodosAgendamentosDoDiaAtual
+/listarTodosAgendamentosDoDiaEspecífico
+/relatorioFaturamentoDoDiaAtual
+/relatorioFaturamentoDoIntervalo
+/cancelarAgendamento
+/agendarParaCliente
+/tornaHorarioIndisponivel
+/fecharAgendaDoDia
+
+
+
+
+
+
