@@ -24,14 +24,16 @@ login > visualiza Corte+Preço+Horário
 ------------entidades---------------
 
 User { id, name, phone, email, senha, autorizacao}
+Appointments ok
+Serviços ( cortes) ok
 
 
 
 
 
 ------------User:cliente-------------
-/cadastrar: Post {Nome, email, telefone, dataDeNascimento, senha}
-/login: Post { email, senha }
+/cadastrar: Post {Nome, email, telefone, dataDeNascimento, senha} ok
+/login: Post { email, senha } ok
 /sair(logout)
 /listarMeusAgendamentos
 /cancelarMeuAgendamento
@@ -47,7 +49,15 @@ ____________User:adm________________
 /agendarParaCliente
 /tornaHorarioIndisponivel
 /fecharAgendaDoDia
+/criarNovoUserAdminOuStaff
 
+Cortes ( BarberServices)
+
+/criarCorte ok
+/listarCortes
+/deletarCortes
+/atualizarCorte
+/encontrarCortePeloId
 
 
 

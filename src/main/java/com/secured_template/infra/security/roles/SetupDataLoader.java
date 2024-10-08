@@ -38,7 +38,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         @Override
         @Transactional
         public void onApplicationEvent (ContextRefreshedEvent event){
-
+            alreadySetup = true;
         if (alreadySetup)
 
             return;
