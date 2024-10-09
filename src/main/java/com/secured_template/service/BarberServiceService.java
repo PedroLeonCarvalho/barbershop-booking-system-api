@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class BarberServiceService {
 
-     private final BarberServiceRepository serviceRepository;
+    private final BarberServiceRepository serviceRepository;
 
     public BarberServiceService(BarberServiceRepository serviceRepository) {
         this.serviceRepository = serviceRepository;
@@ -24,7 +24,7 @@ public class BarberServiceService {
                 serviceDto.getPrice(),
                 serviceDto.getIsActive(),
                 serviceDto.getDurationMinutes()
-        ) ;
+        );
 
         serviceRepository.save(barberService);
 
@@ -38,30 +38,38 @@ public class BarberServiceService {
     }
 
     private ServiceResponseDto convertToResponseDto(BarberService barberService) {
-    return  ServiceResponseDto.builder()
-            .price(barberService.getPrice())
-            .description(barberService.getDescription())
-            .name(barberService.getName())
-            .durationMinutes(barberService.getDurationMinutes()).build();
+        return ServiceResponseDto.builder()
+                .price(barberService.getPrice())
+                .description(barberService.getDescription())
+                .name(barberService.getName())
+                .durationMinutes(barberService.getDurationMinutes()).build();
 
     }
 
-    public BarberServiceDto updateService (Long id, BarberServiceDto serviceDto) {
+    public BarberServiceDto updateService(Long id, BarberServiceDto serviceDto) {
         var barberService = serviceRepository.findServiceById(id);
         barberService.setDescription(serviceDto.getDescription());
         barberService.setName(serviceDto.getName());
         barberService.setPrice(serviceDto.getPrice());
         barberService.setDurationMinutes(serviceDto.getDurationMinutes());
-
+        serviceRepository.save(barberService);
         return serviceDto;
 
 
-
     }
 
+    public void deleteService(Long id) {
+
+        var service = serviceRepository.findServiceById(id);
+        service.setIsActive(false);
+        serviceRepository.save(service);
+
+    }
+//
 //    public List<ServiceResponseDto> getAllServices() {
-//         var lista = serviceRepository.findAll();
-
-
-    }
-
+//        var lista = serviceRepository.findAll();
+//        lista.m
+//
+//
+//    }
+}

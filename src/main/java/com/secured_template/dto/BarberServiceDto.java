@@ -6,12 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BarberServiceDto {
+public class BarberServiceDto implements Serializable {
 
         private String name;
 

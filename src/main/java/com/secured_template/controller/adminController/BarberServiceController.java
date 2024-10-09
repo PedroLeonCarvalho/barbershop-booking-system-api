@@ -5,10 +5,7 @@ import com.secured_template.dto.ServiceResponseDto;
 import com.secured_template.service.BarberServiceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -30,27 +27,27 @@ public class BarberServiceController {
 
     // nao funciona 403 Forbiden
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ServiceResponseDto> getServiceById(@PathVariable Long id) {
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<ServiceResponseDto> getServiceById(@PathVariable("id") Long id) {
         ServiceResponseDto response = serviceService.getServiceById(id);
         return ResponseEntity.ok(response);
     }
 
     // nao funciona 403 Forbiden
-    @PutMapping("/{id}")
-    public ResponseEntity<BarberServiceDto> updateService(@PathVariable Long id, @RequestBody BarberServiceDto serviceDto) {
+    @PutMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<BarberServiceDto> updateService(@PathVariable("id")  Long id, @RequestBody BarberServiceDto serviceDto) {
         BarberServiceDto response = serviceService.updateService(id, serviceDto);
         return ResponseEntity.ok(response);
     }
-//
-//    // 4. Delete BarberService
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteService(@PathVariable Long id) {
-//        serviceService.deleteService(id);
-//        return ResponseEntity.noContent().build(); // Retorna um 204 No Content
-//    }
-//
-//
+
+    // 4. Delete BarberService
+    @DeleteMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<String> deleteService(@PathVariable("id") Long id) {
+        serviceService.deleteService(id);
+        return ResponseEntity.ok("Serviço desativado com sucesso"); // Retorna um 204 No Content
+    }
+
+
 //    @GetMapping
 //    public ResponseEntity<List<ServiceResponseDto>> getAllServices() {
 //        List<ServiceResponseDto> services = serviceService.getAllServices();

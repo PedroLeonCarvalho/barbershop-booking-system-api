@@ -54,10 +54,12 @@ ____________User:adm________________
 Cortes ( BarberServices)
 
 /criarCorte ok
+
 /listarCortes
 /deletarCortes
 /atualizarCorte
 /encontrarCortePeloId
+
 
 
 

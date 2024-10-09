@@ -1,4 +1,4 @@
-package com.secured_template.controller;
+package com.secured_template.controller.userController;
 
 import com.secured_template.dto.LoginDTO;
 import com.secured_template.infra.security.TokenDTO;

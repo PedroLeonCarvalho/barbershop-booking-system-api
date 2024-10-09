@@ -1,10 +1,6 @@
-package com.secured_template.controller;
+package com.secured_template.controller.userController;
 
-import com.secured_template.dto.AppointmentDto;
-import com.secured_template.dto.AppointmentResponseDto;
 import com.secured_template.service.AppointmentService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
