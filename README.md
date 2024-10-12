@@ -1,4 +1,4 @@
-# Sistema de agendamento para Barbearias/Salões
+# Sistema de agendamento para Barbearias/Salões (back-end)
 
 
 ## Funcionalidades
