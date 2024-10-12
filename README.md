@@ -3,7 +3,7 @@
 
 ## Funcionalidades
 
-- Lista Agendamentos disponíveis com base no dia e barbeiro selecionados;
+- Lista horários disponíveis com base na data e barbeiro selecionados;
 - Agenda um horário
 
 
