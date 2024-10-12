@@ -14,4 +14,8 @@ public interface TimeSlotRepository extends JpaRepository <TimeSlot, Long> {
     List<TimeSlot> findByAppointmentDateAndIsBookedTrue(LocalDate date);
 
    TimeSlot findByAppointmentDateAndAvailableTime(LocalDate data, LocalTime time);
+
+    List<TimeSlot> findByAppointmentDateAndBarberIdAndIsBookedTrue(LocalDate date, Long barberId);
+
+    TimeSlot findByAppointmentDateAndAvailableTimeAndBarberId(LocalDate appointmentDate, LocalTime appointmentTime, Long barberId);
 }

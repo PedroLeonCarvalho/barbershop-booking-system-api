@@ -19,37 +19,41 @@ public class TimeSlotService {
         this.timeSlotRepository = timeSlotRepository;
     }
 
-    public List<TimeSlot> getAvailableTimeSlots (LocalDate date) {
-        // Verifica se o dia é válido
-        if (!isValidDay(date)) {
-            throw new RuntimeException("Barbearia fechada nesse dia.");
-        }
+    public List<TimeSlot> getAvailableTimeSlots (LocalDate date, Long barberId) {
 
-        // Gera os horários dinamicamente
-        List<LocalTime> availableTimes = getAvailableTimes();
-        List<TimeSlot> availableSlots = new ArrayList<>();
-        List<TimeSlot> bookedSlots = timeSlotRepository.findByAppointmentDateAndIsBookedTrue(date);
-
-        // Verifica quais horários ainda não estão reservados
-        for (LocalTime time : availableTimes) {
-            boolean isAlreadyBooked = bookedSlots.stream()
-                    .anyMatch(slot -> slot.getAvailableTime().equals(time));
-
-            if (!isAlreadyBooked) {
-                TimeSlot slot = new TimeSlot();
-                slot.setAppointmentDate(date);
-                slot.setAvailableTime(time);
-                slot.setBooked(false); // O horário não está reservado
-                availableSlots.add(slot);
+            // Verifica se o dia é válido
+            if (!isValidDay(date)) {
+                throw new RuntimeException("Barbearia fechada nesse dia.");
             }
+
+            // Gera os horários dinamicamente
+            List<LocalTime> availableTimes = getAvailableTimes();
+            List<TimeSlot> availableSlots = new ArrayList<>();
+            // Busca os horários já reservados para o barbeiro específico
+
+        List<TimeSlot> bookedSlots = timeSlotRepository.findByAppointmentDateAndBarberIdAndIsBookedTrue(date, barberId);
+            // Verifica quais horários ainda não estão reservados
+            for (LocalTime time : availableTimes) {
+                boolean isAlreadyBooked = bookedSlots.stream()
+                        .anyMatch(slot -> slot.getAvailableTime().equals(time));
+
+                if (!isAlreadyBooked) {
+                    TimeSlot slot = new TimeSlot();
+                    slot.setAppointmentDate(date);
+                    slot.setAvailableTime(time);
+                    slot.setBooked(false);
+                    slot.setBarberId(barberId);// O horário não está reservado
+                    availableSlots.add(slot);
+                }
+            }
+             return availableSlots; // Retorna a lista de horários disponíveis
         }
-        return availableSlots; // Retorna a lista de horários disponíveis
-    }
+
 
 
     // Verifica se a barbearia está aberta no dia especificado
     private boolean isValidDay(LocalDate date) {
-        if (date.isBefore(LocalDate.now())) {
+         if (date.isBefore(LocalDate.now())) {
             return false;
         }
         // Verifica se a data está muito no futuro (exemplo: mais de 3 meses à frente)
@@ -67,19 +71,19 @@ public class TimeSlotService {
 
 
     @Transactional
-    public void  bookTimeSlot(String data , String time) throws IllegalStateException {
+    public void  bookTimeSlot(String data , String time, Long barberId) throws IllegalStateException {
         // Converte a string "data" para LocalDate
         LocalDate appointmentDate = LocalDate.parse(data);
 
         // Converte a string "time" para LocalTime
         LocalTime appointmentTime = LocalTime.parse(time);
 
-        TimeSlot timeSlot = timeSlotRepository.findByAppointmentDateAndAvailableTime(appointmentDate, appointmentTime);
-
+        TimeSlot timeSlot = timeSlotRepository.findByAppointmentDateAndAvailableTimeAndBarberId(appointmentDate, appointmentTime, barberId);
         if( timeSlot == null) {
             TimeSlot newTimeSlot = new TimeSlot();
             newTimeSlot.setAppointmentDate(appointmentDate);
             newTimeSlot.setAvailableTime(appointmentTime);
+            newTimeSlot.setBarberId(barberId);
             newTimeSlot.setBooked(true);  // Marca o horário como reservado
             timeSlotRepository.save(newTimeSlot);
         }

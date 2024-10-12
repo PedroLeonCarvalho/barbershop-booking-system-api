@@ -19,7 +19,8 @@ public class AppointmentDto {
     private Integer id;
     private LocalDate appointmentDate;
     private LocalTime appointmentTime;
+    private Long serviceId;
     private Long customerId;
     private Long professionalId;
-    private Long serviceId;
+
 }

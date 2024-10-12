@@ -33,10 +33,11 @@ public class AppointmentService {
         appointment.getAppointmentTime();
         // Converte LocalDate e LocalTime em String
         String dateStr = appointment.getAppointmentDate().toString();  // "yyyy-MM-dd"
-        String timeStr = appointment.getAppointmentTime().toString();  // "HH:mm"
+        String timeStr = appointment.getAppointmentTime().toString();
+        Long barberId = appointment.getProfessionalId();// "HH:mm"
 
         // Chama o método bookTimeSlot passando as strings de data e hora
-        timeSlotService.bookTimeSlot(dateStr, timeStr);
+        timeSlotService.bookTimeSlot(dateStr, timeStr, barberId);
     return convertApponintment(appointment);
 
     }

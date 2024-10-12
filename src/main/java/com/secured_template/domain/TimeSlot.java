@@ -24,6 +24,9 @@ public class TimeSlot implements Serializable {
     @Column(name = "appointment_time", nullable = false)
     private LocalTime availableTime;
 
+    @Column(name ="barber_id")
+    private Long barberId;
+
     @Column(name = "is_booked", nullable = false)
     private boolean isBooked = false;
 

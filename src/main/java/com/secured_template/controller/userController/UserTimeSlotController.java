@@ -22,10 +22,10 @@ public final     TimeSlotService timeSlotService;
     }
 
     @GetMapping("/available-schedules")
-    public ResponseEntity<List<TimeSlot>> getAvaibleTimeSlots(@RequestParam ("date") String date) {
-
+    public ResponseEntity<List<TimeSlot>> getAvaibleTimeSlots(@RequestParam("date") String date,
+                                                                @RequestParam("barberId") Long barberId ) {
         LocalDate appointmentDate = LocalDate.parse(date); // Converte a string para LocalDate
-        List<TimeSlot> schedules = timeSlotService.getAvailableTimeSlots(appointmentDate);
+        List<TimeSlot> schedules = timeSlotService.getAvailableTimeSlots(appointmentDate, barberId);
         return ResponseEntity.ok(schedules);
     }
 

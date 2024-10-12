@@ -29,7 +29,7 @@ Agendamento
 Horarios
 
 ____________endpoints_______________
-/user/agendar: Post { serviço, data , horário, userID }
+ok /user/agendar: Post { serviço, data , horário, userID }
 /user/cancelarAgendamento
 /user/listarMeusAgendamentos
 /admin/listar-todos-agendamentos-do-Dia {post: dia}
