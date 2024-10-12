@@ -12,22 +12,31 @@ public class AppointmentService {
 
     private final BarberServiceRepository serviceRepository;
     private final UserRepository userRepository;
+    private final TimeSlotService timeSlotService;
 
-    public AppointmentService(BarberServiceRepository serviceRepository, UserRepository userRepository) {
+    public AppointmentService(BarberServiceRepository serviceRepository, UserRepository userRepository, TimeSlotService timeSlotService) {
         this.serviceRepository = serviceRepository;
         this.userRepository = userRepository;
+        this.timeSlotService = timeSlotService;
     }
 
 
     public  AppointmentResponseDto createAppointment(AppointmentDto appointmentDto) {
 
         Appointment appointment = new Appointment();
-    appointment.setAppointmentDate(appointmentDto.getAppointmentDate());
-    appointment.setAppointmentTime(appointmentDto.getAppointmentTime());
-    appointment.setServiceId(appointmentDto.getServiceId());
-    appointment.setCustomerId(appointmentDto.getCustomerId());
-    appointment.setProfessionalId(appointmentDto.getProfessionalId());
+        appointment.setAppointmentDate(appointmentDto.getAppointmentDate());
+        appointment.setAppointmentTime(appointmentDto.getAppointmentTime());
+        appointment.setServiceId(appointmentDto.getServiceId());
+        appointment.setCustomerId(appointmentDto.getCustomerId());
+        appointment.setProfessionalId(appointmentDto.getProfessionalId());
+        appointment.getAppointmentDate();
+        appointment.getAppointmentTime();
+        // Converte LocalDate e LocalTime em String
+        String dateStr = appointment.getAppointmentDate().toString();  // "yyyy-MM-dd"
+        String timeStr = appointment.getAppointmentTime().toString();  // "HH:mm"
 
+        // Chama o método bookTimeSlot passando as strings de data e hora
+        timeSlotService.bookTimeSlot(dateStr, timeStr);
     return convertApponintment(appointment);
 
     }
@@ -43,10 +52,11 @@ public class AppointmentService {
         responseDto.setServicePrice(service.getPrice());
         responseDto.setProfessionalName(professional.getName());
         responseDto.setServiceName(service.getName());
-
         return responseDto;
 
     }
+
+
 
 
 

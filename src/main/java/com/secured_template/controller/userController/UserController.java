@@ -22,6 +22,7 @@ public class UserController {
         var newUser =userService.createUser(user);
         return new ResponseEntity(newUser, HttpStatus.CREATED);
     }
+
    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/acaoRestrita")
     ResponseEntity<String> acaoRestrita () {

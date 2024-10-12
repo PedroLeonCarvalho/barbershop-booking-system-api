@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/admin")
 public class BarberServiceController {
-
-
     private final BarberServiceService serviceService; // Supondo que você tenha um BarberServiceService que lida com a lógica de negócios
 
     public BarberServiceController(BarberServiceService serviceService) {

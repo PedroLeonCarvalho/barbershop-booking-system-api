@@ -1,5 +1,6 @@
 
 FLUXO FRONT END:
+
 Pagina 1 <a> Agendar Atendimento <a/>
 Pagina 2 <checkbox> Seleciona um serviço
 Seleciona Barbeiro
@@ -22,46 +23,30 @@ login > visualiza Corte+Preço+Horário
 /agendar: Post { serviço, data , horário, userID }
 
 ------------entidades---------------
+User
+Corte
+Agendamento
+Horarios
 
-User { id, name, phone, email, senha, autorizacao}
-Appointments ok
-Serviços ( cortes) ok
+____________endpoints_______________
+/user/agendar: Post { serviço, data , horário, userID }
+/user/cancelarAgendamento
+/user/listarMeusAgendamentos
+/admin/listar-todos-agendamentos-do-Dia {post: dia}
+/admin/tornaHorarioIndisponivel put { }
+/admin/fecharAgendaDoDia
+/admin/criarNovoUserAdminOuStaff
+
+----lógica do agendamento------
+
+ Popula o banco de dados com os Horarios ( 8h00, 8h30, 9h00 etc...)
 
 
 
+EXTRAS:
 
-
-------------User:cliente-------------
-/cadastrar: Post {Nome, email, telefone, dataDeNascimento, senha} ok
-/login: Post { email, senha } ok
-/sair(logout)
-/listarMeusAgendamentos
-/cancelarMeuAgendamento
-/agendar: Post { serviço, data , horário, userID }
-
-____________User:adm________________
-
-/listarTodosAgendamentosDoDiaAtual
-/listarTodosAgendamentosDoDiaEspecífico
+/amdin/agendarParaCliente Post {só horário e nome}
 /relatorioFaturamentoDoDiaAtual
 /relatorioFaturamentoDoIntervalo
-/cancelarAgendamento
-/agendarParaCliente
-/tornaHorarioIndisponivel
-/fecharAgendaDoDia
-/criarNovoUserAdminOuStaff
 
-Cortes ( BarberServices)
-
-/criarCorte ok
-
-/listarCortes
-/deletarCortes
-/atualizarCorte
-/encontrarCortePeloId
-
-
-
-
-
-
+-pode incluir feriados na validação do dia pela api https://brasilapi.com.br/api/feriados/v1/2025

@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -19,10 +21,10 @@ public class Appointment {
     private Integer id;
 
     @Column(name = "appointment_date", nullable = false)
-    private Date appointmentDate;
+    private LocalDate appointmentDate;
 
     @Column(name = "appointment_time", nullable = false)
-    private Time appointmentTime;
+    private LocalTime appointmentTime;
 
     @Column(name = "customer_id", nullable = false)
     private Long customerId;

@@ -7,6 +7,7 @@ import com.secured_template.repository.BarberServiceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BarberServiceService {
@@ -65,11 +66,11 @@ public class BarberServiceService {
         serviceRepository.save(service);
 
     }
-//
-//    public List<ServiceResponseDto> getAllServices() {
-//        var lista = serviceRepository.findAll();
-//        lista.m
-//
-//
-//    }
+
+    public List<ServiceResponseDto> getAllServices() {
+        var lista = serviceRepository.findAllByisActiveTrue();
+       return lista.stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+    }
 }

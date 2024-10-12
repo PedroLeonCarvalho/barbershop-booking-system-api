@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Getter
@@ -17,8 +19,8 @@ import java.util.Date;
 public class AppointmentResponseDto {
 
     private Integer id;
-    private Date appointmentDate;
-    private Time appointmentTime;
+    private LocalDate appointmentDate;
+    private LocalTime appointmentTime;
     private String customerName;
     private String professionalName;
     private String serviceName;
