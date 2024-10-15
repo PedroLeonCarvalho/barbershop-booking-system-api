@@ -53,6 +53,7 @@ public class BarberServiceService {
         barberService.setName(serviceDto.getName());
         barberService.setPrice(serviceDto.getPrice());
         barberService.setDurationMinutes(serviceDto.getDurationMinutes());
+        barberService.setIsActive(serviceDto.getIsActive());
         serviceRepository.save(barberService);
         return serviceDto;
 

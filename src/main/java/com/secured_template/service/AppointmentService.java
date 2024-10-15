@@ -1,6 +1,8 @@
 package com.secured_template.service;
 
 import com.secured_template.domain.Appointment;
+import com.secured_template.domain.BarberService;
+import com.secured_template.domain.User;
 import com.secured_template.dto.AppointmentDto;
 import com.secured_template.dto.AppointmentResponseDto;
 import com.secured_template.repository.AppointmentRepository;
@@ -34,26 +36,40 @@ public class AppointmentService {
 
         appointment.setAppointmentDate(appointmentDto.getAppointmentDate());
         appointment.setAppointmentTime(appointmentDto.getAppointmentTime());
-        appointment.setServiceId(appointmentDto.getServiceId());
-        appointment.setCustomerId(appointmentDto.getCustomerId());
-        appointment.setProfessionalId(appointmentDto.getProfessionalId());
+
+
+        var serviceId = appointmentDto.getServiceId();
+        BarberService service = serviceRepository.findServiceById(serviceId);
+        appointment.setService(service);
+
+        var professionalId = appointmentDto.getProfessionalId();
+        User professional = userRepository.findUserById(professionalId);
+        appointment.setProfessional(professional);
+
+
+
+        var customerlId = appointmentDto.getCustomerId();
+        User customer = userRepository.findUserById(customerlId);
+        appointment.setCustomer(customer);
+
         appointmentRepository.save(appointment);
-    return convertApponintment(appointment);
+
+        return convertApponintment(appointment);
 
     }
 
     public AppointmentResponseDto convertApponintment ( Appointment appointment) {
 
-        var service = serviceRepository.findServiceById(appointment.getServiceId());
-        var professional = userRepository.findUserById(appointment.getProfessionalId());
-
         AppointmentResponseDto responseDto = new AppointmentResponseDto();
         responseDto.setAppointmentDate(appointment.getAppointmentDate());
         responseDto.setAppointmentTime(appointment.getAppointmentTime());
-        responseDto.setServicePrice(service.getPrice());
-        responseDto.setProfessionalName(professional.getName());
+        responseDto.setServicePrice(appointment.getService().getPrice());
+        responseDto.setProfessionalName(appointment.getProfessional().getName());
+        responseDto.setCustomerName(appointment.getCustomer().getName());
+        responseDto.setServiceName(appointment.getService().getName());
+        responseDto.setCustomerName(appointment.getCustomer().getName());
+        responseDto.setComments(appointment.getComments());
 
-        responseDto.setServiceName(service.getName());
         return responseDto;
 
     }
@@ -62,13 +78,15 @@ public class AppointmentService {
     public void deleteAppointment(Long id) {
         var appointment = appointmentRepository.getAppointmentById(id);
         appointment.setActive(false);
+
         var date = appointment.getAppointmentDate();
         var time = appointment.getAppointmentTime();
-        var barberId = appointment.getProfessionalId();
+        var barberId = appointment.getProfessional().getId();
 
         var timeslot = timeSlotRepository.findByAppointmentDateAndAvailableTimeAndBarberId(date,time,barberId);
         timeslot.setBooked(false);
 
+        timeSlotRepository.save(timeslot);
         appointmentRepository.save(appointment);
 
     }

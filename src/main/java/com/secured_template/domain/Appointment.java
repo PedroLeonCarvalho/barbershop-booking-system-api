@@ -26,14 +26,17 @@ public class Appointment {
     @Column(name = "appointment_time", nullable = false)
     private LocalTime appointmentTime;
 
-    @Column(name = "customer_id", nullable = false)
-    private Long customerId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    private User customer;
 
-    @Column(name = "professional_id", nullable = false)
-    private Long professionalId;
+    @ManyToOne
+    @JoinColumn(name = "professional_id", referencedColumnName = "id", nullable = false)
+    private User professional;
 
-    @Column(name = "service_id", nullable = false)
-    private Long serviceId;
+    @OneToOne
+    @JoinColumn(name = "service_id", referencedColumnName = "id", nullable = false)
+    private BarberService service;
 
     @Column(name = "created_at", updatable = false)
     private Timestamp createdAt;
