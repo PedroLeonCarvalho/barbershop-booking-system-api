@@ -3,41 +3,41 @@ package com.secured_template.service;
 import com.secured_template.domain.Appointment;
 import com.secured_template.dto.AppointmentDto;
 import com.secured_template.dto.AppointmentResponseDto;
+import com.secured_template.repository.AppointmentRepository;
 import com.secured_template.repository.BarberServiceRepository;
+import com.secured_template.repository.TimeSlotRepository;
 import com.secured_template.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AppointmentService {
+    private final AppointmentRepository appointmentRepository;
 
     private final BarberServiceRepository serviceRepository;
     private final UserRepository userRepository;
     private final TimeSlotService timeSlotService;
+    private final TimeSlotRepository timeSlotRepository;
 
-    public AppointmentService(BarberServiceRepository serviceRepository, UserRepository userRepository, TimeSlotService timeSlotService) {
+    public AppointmentService(AppointmentRepository appointmentRepository, BarberServiceRepository serviceRepository, UserRepository userRepository, TimeSlotService timeSlotService,
+                              TimeSlotRepository timeSlotRepository) {
+        this.appointmentRepository = appointmentRepository;
         this.serviceRepository = serviceRepository;
         this.userRepository = userRepository;
         this.timeSlotService = timeSlotService;
+        this.timeSlotRepository = timeSlotRepository;
     }
 
 
     public  AppointmentResponseDto createAppointment(AppointmentDto appointmentDto) {
 
         Appointment appointment = new Appointment();
+
         appointment.setAppointmentDate(appointmentDto.getAppointmentDate());
         appointment.setAppointmentTime(appointmentDto.getAppointmentTime());
         appointment.setServiceId(appointmentDto.getServiceId());
         appointment.setCustomerId(appointmentDto.getCustomerId());
         appointment.setProfessionalId(appointmentDto.getProfessionalId());
-        appointment.getAppointmentDate();
-        appointment.getAppointmentTime();
-        // Converte LocalDate e LocalTime em String
-        String dateStr = appointment.getAppointmentDate().toString();  // "yyyy-MM-dd"
-        String timeStr = appointment.getAppointmentTime().toString();
-        Long barberId = appointment.getProfessionalId();// "HH:mm"
-
-        // Chama o método bookTimeSlot passando as strings de data e hora
-        timeSlotService.bookTimeSlot(dateStr, timeStr, barberId);
+        appointmentRepository.save(appointment);
     return convertApponintment(appointment);
 
     }
@@ -52,13 +52,31 @@ public class AppointmentService {
         responseDto.setAppointmentTime(appointment.getAppointmentTime());
         responseDto.setServicePrice(service.getPrice());
         responseDto.setProfessionalName(professional.getName());
+
         responseDto.setServiceName(service.getName());
         return responseDto;
 
     }
 
 
+    public void deleteAppointment(Long id) {
+        var appointment = appointmentRepository.getAppointmentById(id);
+        appointment.setActive(false);
+        var date = appointment.getAppointmentDate();
+        var time = appointment.getAppointmentTime();
+        var barberId = appointment.getProfessionalId();
 
+        var timeslot = timeSlotRepository.findByAppointmentDateAndAvailableTimeAndBarberId(date,time,barberId);
+        timeslot.setBooked(false);
 
+        appointmentRepository.save(appointment);
 
+    }
+
+    public AppointmentResponseDto getMyAppointments(Long id) {
+        var appointment = appointmentRepository.findBycustomerId(id);
+
+        return convertApponintment(appointment);
+
+    }
 }

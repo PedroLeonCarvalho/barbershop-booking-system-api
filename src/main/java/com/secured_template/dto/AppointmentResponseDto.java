@@ -25,4 +25,5 @@ public class AppointmentResponseDto {
     private String professionalName;
     private String serviceName;
     private BigDecimal servicePrice;
+    private String comments;
 }

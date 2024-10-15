@@ -40,4 +40,10 @@ public class Appointment {
 
     @Column(name = "updated_at", insertable = false)
     private Timestamp updatedAt;
+
+    @Column(name = "is_active")
+    private boolean isActive = true;
+    @Column(name = "comments")
+    private String comments;
+
 }

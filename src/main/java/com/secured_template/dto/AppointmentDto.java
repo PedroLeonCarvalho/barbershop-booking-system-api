@@ -1,10 +1,7 @@
 package com.secured_template.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Time;
 import java.time.LocalDate;
@@ -14,6 +11,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AppointmentDto {
 
     private Integer id;
@@ -21,6 +19,7 @@ public class AppointmentDto {
     private LocalTime appointmentTime;
     private Long serviceId;
     private Long customerId;
+    private String customerName;
     private Long professionalId;
 
 }

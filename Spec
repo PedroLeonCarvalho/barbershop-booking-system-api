@@ -29,17 +29,29 @@ Agendamento
 Horarios
 
 ____________endpoints_______________
-ok /user/agendar: Post { serviço, data , horário, userID }
-/user/cancelarAgendamento
+
 /user/listarMeusAgendamentos
 /admin/listar-todos-agendamentos-do-Dia {post: dia}
-/admin/tornaHorarioIndisponivel put { }
+/admin/tornaHorarioIndisponivel
 /admin/fecharAgendaDoDia
 /admin/criarNovoUserAdminOuStaff
 
-----lógica do agendamento------
+----------/user ------
+/login POST
+/create-appointment  POST
+/appointment/{id}  DELETE
 
- Popula o banco de dados com os Horarios ( 8h00, 8h30, 9h00 etc...)
+--------/admin ------
+/create-service
+/close-timeslot?date=2024-10-16&time=09:30&barberId=2
+/service/{id}  obtém serviço
+/service/1 + JSON atualiza serviço
+/service/1 deleta serviço
+
+------Unauthenticated----
+/info/services lista serviços
+/info/timeslots?date=2024-10-17&barberId=68   lista timeSlots disponíveis com base no dia e barbeiro
+
 
 
 

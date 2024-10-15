@@ -1,4 +1,4 @@
-package com.secured_template.controller.userController;
+package com.secured_template.controller.unauthenticated;
 
 import com.secured_template.dto.UserDto;
 import com.secured_template.service.UserService;
@@ -22,10 +22,5 @@ public class UserController {
         var newUser =userService.createUser(user);
         return new ResponseEntity(newUser, HttpStatus.CREATED);
     }
-
-   @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/acaoRestrita")
-    ResponseEntity<String> acaoRestrita () {
-        return new ResponseEntity<String>("Ação restrita ao ADM realizada com sucesso", HttpStatus.CREATED); }
 
 }
