@@ -71,7 +71,7 @@ public class TimeSlotService {
 
 
     @Transactional
-    public void  bookTimeSlot(String data , String time, Long barberId) throws IllegalStateException {
+    public void   bookTimeSlot(String data , String time, Long barberId) throws IllegalStateException {
         // Converte a string "data" para LocalDate
         LocalDate appointmentDate = LocalDate.parse(data);
 

@@ -30,9 +30,9 @@ Horarios
 
 ____________endpoints_______________
 
-/user/listarMeusAgendamentos
-/admin/listar-todos-agendamentos-do-Dia {post: dia}
-/admin/tornaHorarioIndisponivel
+
+
+
 /admin/fecharAgendaDoDia
 /admin/criarNovoUserAdminOuStaff
 
@@ -40,8 +40,10 @@ ____________endpoints_______________
 /login POST
 /create-appointment  POST
 /appointment/{id}  DELETE
+/user/appointment : listarMeusAgendamentos
 
 --------/admin ------
+/admin/listar-todos-agendamentos-do-Dia {post: dia}
 /create-service
 /close-timeslot?date=2024-10-16&time=09:30&barberId=2
 /service/{id}  obtém serviço

@@ -11,6 +11,10 @@ import com.secured_template.repository.TimeSlotRepository;
 import com.secured_template.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
@@ -96,5 +100,32 @@ public class AppointmentService {
 
         return convertApponintment(appointment);
 
+    }
+
+    public List<AppointmentResponseDto> getMyAppointmentsBarbarber(Long id) {
+
+        var appointment = appointmentRepository.findAppointmentsByProfessionalId(id);
+        return
+                appointment.stream()
+                        .map(this::convertApponintment)
+                        .collect(Collectors.toList());
+    }
+
+
+
+    public List<AppointmentResponseDto> getMyCurrentDayBarberAppointments(Long id) {
+        var appointment = appointmentRepository.findAppointmentsByProfessionalIdAndAppointmentDate(id, LocalDate.now());
+        return
+                appointment.stream()
+                        .map(this::convertApponintment)
+                        .collect(Collectors.toList());
+    }
+
+    public List<AppointmentResponseDto> getMyEspecificDayBarberAppointments(Long id, LocalDate date) {
+        var appointment = appointmentRepository.findAppointmentsByProfessionalIdAndAppointmentDate(id, date);
+        return
+                appointment.stream()
+                        .map(this::convertApponintment)
+                        .collect(Collectors.toList());
     }
 }
