@@ -28,7 +28,7 @@ public class TimeSlot implements Serializable {
     private Long barberId;
 
     @Column(name = "is_booked", nullable = false)
-    private boolean isBooked = false;
+    private boolean booked = false;
 
 }
 

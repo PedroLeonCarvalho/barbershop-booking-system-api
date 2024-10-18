@@ -29,11 +29,10 @@ Agendamento
 Horarios
 
 ____________endpoints_______________
+Tratamento de erros
+restrições de acesso
 
 
-
-
-/admin/fecharAgendaDoDia
 /admin/criarNovoUserAdminOuStaff
 
 ----------/user ------
@@ -43,6 +42,7 @@ ____________endpoints_______________
 /user/appointment : listarMeusAgendamentos
 
 --------/admin ------
+/admin/fecharAgendaDoDia
 /admin/listar-todos-agendamentos-do-Dia {post: dia}
 /create-service
 /close-timeslot?date=2024-10-16&time=09:30&barberId=2

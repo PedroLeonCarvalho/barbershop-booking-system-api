@@ -40,7 +40,7 @@ public class AppointmentService {
 
         appointment.setAppointmentDate(appointmentDto.getAppointmentDate());
         appointment.setAppointmentTime(appointmentDto.getAppointmentTime());
-
+        appointment.setComments(appointmentDto.getComments());
 
         var serviceId = appointmentDto.getServiceId();
         BarberService service = serviceRepository.findServiceById(serviceId);
@@ -87,8 +87,8 @@ public class AppointmentService {
         var time = appointment.getAppointmentTime();
         var barberId = appointment.getProfessional().getId();
 
-        var timeslot = timeSlotRepository.findByAppointmentDateAndAvailableTimeAndBarberId(date,time,barberId);
-        timeslot.setBooked(false);
+        var timeslot = timeSlotRepository.findByAppointmentDateAndAvailableTimeAndBarberIdAndBookedTrue(date,time,barberId);
+         timeslot.setBooked(false);
 
         timeSlotRepository.save(timeslot);
         appointmentRepository.save(appointment);

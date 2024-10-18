@@ -21,5 +21,6 @@ public class AppointmentDto {
     private Long customerId;
     private String customerName;
     private Long professionalId;
+    private String comments;
 
 }

@@ -34,6 +34,19 @@ public class UserService {
         userRepository.save(newUser);
         return convertToUserDto(newUser);
     }
+    public UserDto createStaffUser(UserDto data) {
+        User newUser = new User(data);
+        newUser.setName(data.name());
+        newUser.setEmail(data.email());
+        newUser.setEnabled(true);
+        newUser.setBirthDate(data.birthDate());
+        newUser.setPhoneNumber(data.phoneNumber());
+        newUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+        newUser.setPassword(passwordEncoder.encode(data.password()));
+
+        userRepository.save(newUser);
+        return convertToUserDto(newUser);
+    }
 
 public  UserDto convertToUserDto (User user) {
         UserDto dto = new UserDto(user.getName(), user.getEmail(),user.getPhoneNumber(), user.getBirthDate(), user.getPassword());

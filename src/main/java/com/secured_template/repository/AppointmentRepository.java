@@ -14,7 +14,7 @@ public interface AppointmentRepository extends JpaRepository <Appointment, Long 
 
     Appointment findBycustomerId(Long id);
 
-    @Query("SELECT a FROM Appointment a WHERE a.professional.id = :professionalId")
+    @Query("SELECT a FROM Appointment a WHERE a.professional.id = :professionalId AND a.appointmentDate >= CURRENT_DATE")
     List<Appointment> findAppointmentsByProfessionalId(@Param("professionalId") Long professionalId);
 
     List<Appointment> findAppointmentsByProfessionalIdAndAppointmentDate(Long id, LocalDate date);

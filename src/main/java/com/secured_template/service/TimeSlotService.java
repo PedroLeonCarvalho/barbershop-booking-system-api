@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TimeSlotService {
@@ -31,7 +32,7 @@ public class TimeSlotService {
             List<TimeSlot> availableSlots = new ArrayList<>();
             // Busca os horários já reservados para o barbeiro específico
 
-        List<TimeSlot> bookedSlots = timeSlotRepository.findByAppointmentDateAndBarberIdAndIsBookedTrue(date, barberId);
+        List<TimeSlot> bookedSlots = timeSlotRepository.findByAppointmentDateAndBarberIdAndBookedTrue(date, barberId);
             // Verifica quais horários ainda não estão reservados
             for (LocalTime time : availableTimes) {
                 boolean isAlreadyBooked = bookedSlots.stream()
@@ -78,7 +79,7 @@ public class TimeSlotService {
         // Converte a string "time" para LocalTime
         LocalTime appointmentTime = LocalTime.parse(time);
 
-        TimeSlot timeSlot = timeSlotRepository.findByAppointmentDateAndAvailableTimeAndBarberId(appointmentDate, appointmentTime, barberId);
+        TimeSlot timeSlot = timeSlotRepository.findByAppointmentDateAndAvailableTimeAndBarberIdAndBookedTrue(appointmentDate, appointmentTime, barberId);
         if( timeSlot == null) {
             TimeSlot newTimeSlot = new TimeSlot();
             newTimeSlot.setAppointmentDate(appointmentDate);
@@ -92,7 +93,38 @@ public class TimeSlotService {
             throw new IllegalStateException("Horário já reservado");
         }
 
+
+
+
     }
+    @Transactional
+    public void   turnAllTimeSlotBookedTrue(String data ,  Long barberId) throws IllegalStateException {
+
+        // Converte a string "data" para LocalDate
+        LocalDate appointmentDate = LocalDate.parse(data);
+        List<TimeSlot> alreadyBookedTimeSlotsByCustomer = timeSlotRepository.findByAppointmentDateAndBarberIdAndBookedTrue(appointmentDate, barberId);
+
+        List<LocalTime> timesAlreadyBookedList = alreadyBookedTimeSlotsByCustomer.stream()
+                .map(TimeSlot::getAvailableTime)
+                .collect(Collectors.toList());
+
+        // Gera uma nova lista mutável com os horários disponíveis
+        var tsList = new ArrayList<>(getAvailableTimes());
+
+        tsList.removeIf(timesAlreadyBookedList::contains);
+
+            for(int i = 0; i<tsList.size(); i++) {
+
+                TimeSlot timeSlot = new TimeSlot();
+                timeSlot.setAvailableTime(tsList.get(i));
+                timeSlot.setAppointmentDate(appointmentDate);
+                timeSlot.setBarberId(barberId);
+                timeSlot.setBooked(true);
+                timeSlotRepository.save(timeSlot);
+            }
+        }
+
+
 
     // Gera horários disponíveis para o dia (futuramente pode ser transformada em uma entidade pra ser mais configurável)
     private List<LocalTime> getAvailableTimes() {
@@ -114,5 +146,18 @@ public class TimeSlotService {
                 LocalTime.of(16, 0),
                 LocalTime.of(16, 30)
         );
+    }
+
+    public void setFreeTimeSlot(String date, String time, Long barberId) {
+
+      TimeSlot timeSlot = timeSlotRepository.findByAppointmentDateAndAvailableTimeAndBarberId(LocalDate.parse(date), LocalTime.parse(time), barberId);
+
+        timeSlot.setAvailableTime(LocalTime.parse(time));
+        timeSlot.setAppointmentDate(LocalDate.parse(date));
+        timeSlot.setBooked(false);
+        timeSlot.setBarberId(barberId);
+
+        timeSlotRepository.save(timeSlot);
+
     }
 }

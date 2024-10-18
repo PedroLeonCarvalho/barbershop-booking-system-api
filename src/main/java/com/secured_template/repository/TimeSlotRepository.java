@@ -9,13 +9,17 @@ import java.util.List;
 
 public interface TimeSlotRepository extends JpaRepository <TimeSlot, Long> {
 
-    List<TimeSlot> findByAppointmentDateAndIsBookedFalse(LocalDate appointmentDate);
+    List<TimeSlot> findByAppointmentDateAndBookedFalse(LocalDate appointmentDate);
 
-    List<TimeSlot> findByAppointmentDateAndIsBookedTrue(LocalDate date);
+    List<TimeSlot> findByAppointmentDateAndBookedTrue(LocalDate date);
 
    TimeSlot findByAppointmentDateAndAvailableTime(LocalDate data, LocalTime time);
 
-    List<TimeSlot> findByAppointmentDateAndBarberIdAndIsBookedTrue(LocalDate date, Long barberId);
+    List<TimeSlot> findByAppointmentDateAndBarberIdAndBookedTrue(LocalDate date, Long barberId);
 
     TimeSlot findByAppointmentDateAndAvailableTimeAndBarberId(LocalDate appointmentDate, LocalTime appointmentTime, Long barberId);
+
+    List<TimeSlot> findByAppointmentDateAndBookedFalseAndBarberId(LocalDate appointmentDate, Long barberId);
+
+    TimeSlot findByAppointmentDateAndAvailableTimeAndBarberIdAndBookedTrue(LocalDate appointmentDate, LocalTime appointmentTime, Long barberId);
 }
