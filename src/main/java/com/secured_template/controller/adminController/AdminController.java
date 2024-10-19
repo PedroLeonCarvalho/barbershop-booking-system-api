@@ -19,7 +19,7 @@ public class AdminController {
         this.userService = userService;
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     ResponseEntity<UserDto> createNewStaffUser (@RequestBody UserDto user) {
         var newUser = userService.createStaffUser(user);
