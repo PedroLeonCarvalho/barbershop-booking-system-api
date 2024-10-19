@@ -1,7 +1,6 @@
-package com.secured_template.controller.adminController;
+package com.secured_template.controller.staffController;
 
 import com.secured_template.domain.User;
-import com.secured_template.dto.AppointmentDto;
 import com.secured_template.dto.AppointmentResponseDto;
 import com.secured_template.dto.UserDto;
 import com.secured_template.service.AppointmentService;
@@ -16,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/staff")
 public class AppointmentController {
 private final AppointmentService appointmentService;
 
@@ -89,11 +88,7 @@ private final UserService userService;
     }
 
 
-    @PostMapping
-    ResponseEntity<UserDto> createNewStaffUser (@RequestBody UserDto user) {
-        var newUser = userService.createStaffUser(user);
-        return new ResponseEntity(newUser, HttpStatus.CREATED);
-    }
+
 
 
 
