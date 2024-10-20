@@ -2,12 +2,13 @@ package com.secured_template.infra.security.roles;
 
 import com.secured_template.infra.security.SecurityFilter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+@Configuration
 public class RolesSecurityFilterChain {
 
     private  final SetupRoleHierarchy setupRoleHierarchy;
@@ -19,13 +20,13 @@ public class RolesSecurityFilterChain {
     }
 //The endpoint /roleHierarchy is protected with ROLE_STAFF in order to prove that the webSecurityExpressionHandler is working.
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain rolesFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(authorize -> authorize
                         .expressionHandler(setupRoleHierarchy.customWebSecurityExpressionHandler())
-                        .requestMatchers(HttpMethod.GET, "/users/acaoRestrita")
-                        .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET ,"/staff/appointments")
+                        .hasRole("STAFF")
                         .and()
                         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class))
                 .build();

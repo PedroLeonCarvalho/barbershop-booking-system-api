@@ -2,10 +2,11 @@ package com.secured_template.infra.security.roles;
 
 import com.secured_template.infra.security.SecurityFilter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
-
+@Configuration
 public class SetupRoleHierarchy {
 
     private final SecurityFilter securityFilter;

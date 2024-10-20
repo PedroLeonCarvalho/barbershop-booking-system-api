@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/staff")
 public class BarberServiceController {
     private final BarberServiceService serviceService; // Supondo que você tenha um BarberServiceService que lida com a lógica de negócios
 
