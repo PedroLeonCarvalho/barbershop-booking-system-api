@@ -28,7 +28,7 @@ public class AuthenticationController {
 
     @PostMapping
 
-    public ResponseEntity login (@RequestBody LoginDTO dto) {
+    public ResponseEntity login (@RequestBody LoginDTO dto) throws RuntimeException  {
         var token = new UsernamePasswordAuthenticationToken(dto.email(), dto.password());
         var authentication = authenticationManager.authenticate(token);
         var tokenJWT = tokenService.tokenGenerate( (UserDetails) authentication.getPrincipal());

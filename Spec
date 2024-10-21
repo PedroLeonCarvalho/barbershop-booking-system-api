@@ -30,10 +30,10 @@ Horarios
 
 ____________endpoints_______________
 Tratamento de erros
-restrições de acesso
 
 
-/admin/criarNovoUserAdminOuStaff
+
+
 
 ----------/user ------
 /login POST
@@ -49,7 +49,7 @@ restrições de acesso
 /service/{id}  obtém serviço
 /service/1 + JSON atualiza serviço
 /service/1 deleta serviço
-
+/admin/criarNovoUserAdminOuStaff
 ------Unauthenticated----
 /info/services lista serviços
 /info/timeslots?date=2024-10-17&barberId=68   lista timeSlots disponíveis com base no dia e barbeiro

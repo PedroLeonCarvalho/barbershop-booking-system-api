@@ -39,7 +39,7 @@ public class TokenService {
     }
 
     public String getSubject(String tokenJWT) {
-        tokenJWT = tokenJWT.trim();
+         tokenJWT = tokenJWT.trim();
 
         // Verifica se a string termina com \r\n e remove se necessário
         if (tokenJWT.endsWith("\r\n")) {
