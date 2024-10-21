@@ -1,6 +1,8 @@
 package com.secured_template.infra.security;
 
+import com.secured_template.infra.exception.CustomAuthenticationEntryPoint;
 import com.secured_template.infra.security.roles.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,7 +25,8 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-
+    @Autowired
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final SecurityFilter securityFilter;
     private  final MyUserDetailsService myUserDetailsService;
     private final PasswordEncoder passwordEncoder;
@@ -43,7 +46,9 @@ public class SecurityConfiguration {
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/login**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users/create").permitAll()
+                        .requestMatchers("/staff/**")
+                        .hasRole("STAFF")
                         .anyRequest().authenticated()
                         .and()
                         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class))

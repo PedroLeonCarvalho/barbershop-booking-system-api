@@ -1,4 +1,4 @@
-package com.secured_template.controller.adminController;
+package com.secured_template.controller.staffController;
 
 import com.secured_template.dto.BarberServiceDto;
 import com.secured_template.dto.ServiceResponseDto;
@@ -7,10 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/staff")
 public class BarberServiceController {
     private final BarberServiceService serviceService; // Supondo que você tenha um BarberServiceService que lida com a lógica de negócios
 

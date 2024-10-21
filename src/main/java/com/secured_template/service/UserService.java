@@ -41,7 +41,7 @@ public class UserService {
         newUser.setEnabled(true);
         newUser.setBirthDate(data.birthDate());
         newUser.setPhoneNumber(data.phoneNumber());
-        newUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+        newUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_STAFF")));
         newUser.setPassword(passwordEncoder.encode(data.password()));
 
         userRepository.save(newUser);

@@ -1,14 +1,16 @@
-package com.secured_template.controller.adminController;
+package com.secured_template.controller.staffController;
 
 import com.secured_template.domain.User;
-import com.secured_template.dto.AppointmentDto;
 import com.secured_template.dto.AppointmentResponseDto;
+import com.secured_template.dto.RevenueDto;
 import com.secured_template.dto.UserDto;
+import com.secured_template.infra.exception.AppointmentTimeUnavailableException;
 import com.secured_template.service.AppointmentService;
 import com.secured_template.service.TimeSlotService;
 import com.secured_template.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/staff")
 public class AppointmentController {
 private final AppointmentService appointmentService;
 
@@ -35,7 +37,7 @@ private final UserService userService;
     public ResponseEntity<Void> turnTimeSlotBooked(
             @RequestParam("date") String date,
             @RequestParam("time") String time,
-            @RequestParam("barberId") Long barberId) {
+            @RequestParam("barberId") Long barberId) throws AppointmentTimeUnavailableException {
 
         timeSlotService.bookTimeSlot(date, time, barberId);
         return ResponseEntity.ok().build();
@@ -87,13 +89,17 @@ private final UserService userService;
         var apponitment = appointmentService.getMyEspecificDayBarberAppointments(user.getId(), date);
         return ResponseEntity.ok().body(apponitment);
     }
+    @PreAuthorize("hasRole('STAFF')")
+    @GetMapping("/barber-day-revenue")
+    ResponseEntity<RevenueDto> barberDayRevenue (Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        var dto = appointmentService.getRevenue(user.getId());
+        return  ResponseEntity.ok().body(dto);
 
 
-    @PostMapping
-    ResponseEntity<UserDto> createNewStaffUser (@RequestBody UserDto user) {
-        var newUser = userService.createStaffUser(user);
-        return new ResponseEntity(newUser, HttpStatus.CREATED);
     }
+
+
 
 
 

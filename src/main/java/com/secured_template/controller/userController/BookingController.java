@@ -3,6 +3,7 @@ package com.secured_template.controller.userController;
 import com.secured_template.domain.User;
 import com.secured_template.dto.AppointmentDto;
 import com.secured_template.dto.AppointmentResponseDto;
+import com.secured_template.infra.exception.AppointmentTimeUnavailableException;
 import com.secured_template.service.AppointmentService;
 import com.secured_template.service.TimeSlotService;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,8 @@ private final AppointmentService appointmentService;
     }
 
 //    Pegar os dados do estado do front-end
-
     @PostMapping("/create-appointment")
-    public ResponseEntity<String> createAppointment(@RequestBody AppointmentDto appointmentDto, Authentication auth) {
+    public ResponseEntity<String> createAppointment(@RequestBody AppointmentDto appointmentDto, Authentication auth) throws AppointmentTimeUnavailableException {
        var dateStr = appointmentDto.getAppointmentDate().toString();
        var timeStr =   appointmentDto.getAppointmentTime().toString();
        var barberId = appointmentDto.getProfessionalId();

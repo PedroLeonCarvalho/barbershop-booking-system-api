@@ -1,6 +1,7 @@
 package com.secured_template.service;
 
 import com.secured_template.domain.TimeSlot;
+import com.secured_template.infra.exception.AppointmentTimeUnavailableException;
 import com.secured_template.repository.TimeSlotRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,11 @@ public class TimeSlotService {
         this.timeSlotRepository = timeSlotRepository;
     }
 
-    public List<TimeSlot> getAvailableTimeSlots (LocalDate date, Long barberId) {
+    public List<TimeSlot> getAvailableTimeSlots (LocalDate date, Long barberId) throws AppointmentTimeUnavailableException {
 
             // Verifica se o dia é válido
             if (!isValidDay(date)) {
-                throw new RuntimeException("Barbearia fechada nesse dia.");
+                throw new AppointmentTimeUnavailableException("Barbearia fechada nesse dia.");
             }
 
             // Gera os horários dinamicamente
@@ -72,7 +73,7 @@ public class TimeSlotService {
 
 
     @Transactional
-    public void   bookTimeSlot(String data , String time, Long barberId) throws IllegalStateException {
+    public void   bookTimeSlot(String data , String time, Long barberId) throws AppointmentTimeUnavailableException {
         // Converte a string "data" para LocalDate
         LocalDate appointmentDate = LocalDate.parse(data);
 
@@ -90,7 +91,7 @@ public class TimeSlotService {
         }
 
       else {
-            throw new IllegalStateException("Horário já reservado");
+            throw new AppointmentTimeUnavailableException("Horário indisponível, por favor, escolha outro horário ou data");
         }
 
 
