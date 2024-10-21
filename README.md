@@ -1,6 +1,7 @@
 # Sistema de agendamento para Barbearias/Salões (back-end)
 
 Desenvolvido por Pedro Leon ®
+Video da aplicação rodando: https://studio.youtube.com/video/fjRm5J1VO_A/edit
 ## Funcionalidades
 
 - Lista horários disponíveis com base na data e barbeiro selecionados;
