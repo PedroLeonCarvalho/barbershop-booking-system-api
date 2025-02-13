@@ -25,7 +25,7 @@ public class TimeSlotService {
 
             // Verifica se o dia é válido
             if (!isValidDay(date)) {
-                throw new AppointmentTimeUnavailableException("Barbearia fechada nesse dia.");
+                throw new AppointmentTimeUnavailableException("Barbearia fechada nesse dia ou você está tentando marcar com antecedência superior a 30 dias.");
             }
 
             // Gera os horários dinamicamente

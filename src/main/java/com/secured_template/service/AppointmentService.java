@@ -105,6 +105,7 @@ public class AppointmentService {
     public AppointmentResponseDto getMyAppointments(Long id) {
         var appointment = appointmentRepository.findBycustomerId(id);
 
+
         return convertApponintment(appointment);
 
     }
