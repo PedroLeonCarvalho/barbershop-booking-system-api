@@ -52,6 +52,9 @@ private final AppointmentService appointmentService;
         return ResponseEntity.ok().body(apponitment);
     }
 
+    @GetMapping("/barbers")
+    public ResponseEntity<BarberDto>
+
 
 
 }
