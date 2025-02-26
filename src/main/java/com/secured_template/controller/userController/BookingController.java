@@ -3,12 +3,17 @@ package com.secured_template.controller.userController;
 import com.secured_template.domain.User;
 import com.secured_template.dto.AppointmentDto;
 import com.secured_template.dto.AppointmentResponseDto;
+import com.secured_template.dto.UserDto;
 import com.secured_template.infra.exception.AppointmentTimeUnavailableException;
+import com.secured_template.repository.UserRepository;
 import com.secured_template.service.AppointmentService;
 import com.secured_template.service.TimeSlotService;
+import com.secured_template.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -16,11 +21,16 @@ public class BookingController {
 
 private final TimeSlotService timeSlotService;
 private final AppointmentService appointmentService;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
 
-    public BookingController(TimeSlotService timeSlotService, AppointmentService appointmentService) {
+    public BookingController(TimeSlotService timeSlotService, AppointmentService appointmentService,
+                             UserRepository userRepository, UserService userService) {
         this.timeSlotService = timeSlotService;
         this.appointmentService = appointmentService;
+        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
 //    Pegar os dados do estado do front-end
@@ -51,7 +61,12 @@ private final AppointmentService appointmentService;
        var apponitment = appointmentService.getMyAppointments(user.getId());
         return ResponseEntity.ok().body(apponitment);
     }
+    @GetMapping ("/barbers")
+    public ResponseEntity<List<UserDto>> getAllBarbers ( ) {
+        var barbers = userService.getBarbersList();
+        return ResponseEntity.ok().body(barbers);
 
+    }
 
 
 }

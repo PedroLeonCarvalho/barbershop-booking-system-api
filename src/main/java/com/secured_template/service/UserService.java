@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -49,7 +51,21 @@ public class UserService {
     }
 
 public  UserDto convertToUserDto (User user) {
-        UserDto dto = new UserDto(user.getName(), user.getEmail(),user.getPhoneNumber(), user.getBirthDate(), user.getPassword());
+        UserDto dto = new UserDto(user.getName(), user.getEmail(),user.getPhoneNumber(), user.getBirthDate(), user.getPassword(), user.getProfilePicture());
         return dto;
 }
+
+    public List<UserDto> getBarbersList() {
+
+         List<User> barbers =userRepository.findUserByRoleId(1l,2l);
+            var dtoList =  barbers.stream().
+                map(this::convertToUserDto).collect(Collectors.toUnmodifiableList());
+
+         return dtoList;
+
+
+    }
+
+
+
 }

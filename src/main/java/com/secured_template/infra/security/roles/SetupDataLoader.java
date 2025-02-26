@@ -38,12 +38,17 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         @Override
         @Transactional
         public void onApplicationEvent (ContextRefreshedEvent event){
-            alreadySetup = true;
+
+            if (userRepository.findByEmail("usuario@email.com") != null) {
+                alreadySetup = true;
+            }
+
         if (alreadySetup)
 
             return;
         Privilege readPrivilege
                 = createPrivilegeIfNotFound("READ_PRIVILEGE");
+
         Privilege writePrivilege
                 = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
 

@@ -9,6 +9,7 @@ public record UserDto (
      String email,
      String phoneNumber,
      LocalDate birthDate,
-     String password
+     String password,
+     byte[] profile_picture
 
 )  implements Serializable { }

@@ -1,4 +1,4 @@
 ALTER TABLE appointments
+ADD COLUMN comments VARCHAR(250),
 ADD COLUMN is_active TINYINT(1) DEFAULT 1;
-
 

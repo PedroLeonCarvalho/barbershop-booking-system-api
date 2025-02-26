@@ -27,7 +27,7 @@ public class Appointment {
     private LocalTime appointmentTime;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "customer", referencedColumnName = "id", nullable = false)
     private User customer;
 
     @ManyToOne

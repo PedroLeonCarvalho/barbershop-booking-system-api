@@ -41,6 +41,9 @@ public class User implements Serializable, UserDetails {
     @Column(name = "token_expired")
     private boolean tokenExpired;
 
+    @Column(name = "profile_picture")
+    private byte[] profilePicture;
+
     //Beadulg Solution
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
