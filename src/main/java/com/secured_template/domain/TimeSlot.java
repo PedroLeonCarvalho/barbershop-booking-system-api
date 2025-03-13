@@ -1,5 +1,6 @@
 package com.secured_template.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class TimeSlot implements Serializable {
     private LocalDate appointmentDate;
 
     @Column(name = "appointment_time", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
     private LocalTime availableTime;
 
     @Column(name ="barber_id")

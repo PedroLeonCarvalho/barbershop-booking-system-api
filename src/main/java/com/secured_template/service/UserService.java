@@ -51,7 +51,7 @@ public class UserService {
     }
 
 public  UserDto convertToUserDto (User user) {
-        UserDto dto = new UserDto(user.getName(), user.getEmail(),user.getPhoneNumber(), user.getBirthDate(), user.getPassword(), user.getProfilePicture());
+        UserDto dto = new UserDto(user.getId(), user.getName(), user.getEmail(),user.getPhoneNumber(), user.getBirthDate(), user.getPassword(), user.getProfilePicture());
         return dto;
 }
 

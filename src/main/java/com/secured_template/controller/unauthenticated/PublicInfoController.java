@@ -18,8 +18,7 @@ import java.util.List;
 @RequestMapping("/info")
 public class PublicInfoController {
     private final TimeSlotService timeSlotService;
-
-private final BarberServiceService serviceService;
+    private final BarberServiceService serviceService;
 
     public PublicInfoController(TimeSlotService timeSlotService, BarberServiceService serviceService) {
         this.timeSlotService = timeSlotService;
