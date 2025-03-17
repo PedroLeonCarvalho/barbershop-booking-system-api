@@ -45,6 +45,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
+
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
@@ -67,6 +68,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsFilter corsFilter() { // 🔥 Define regras globais para CORS
         CorsConfiguration config = new CorsConfiguration();
+
         config.setAllowedOrigins(List.of("http://localhost:3000")); // Permite requisições do front-end
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos permitidos
         config.setAllowedHeaders(List.of("*")); // Permite todos os headers
@@ -82,6 +84,7 @@ public class SecurityConfiguration {
     public AuthenticationManager authenticationManager(List<AuthenticationProvider> myAuthenticationProviders) {
         return new ProviderManager(myAuthenticationProviders);
     }
+
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
